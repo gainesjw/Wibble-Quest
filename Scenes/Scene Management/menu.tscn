@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bgqrolpoalurh"]
+[gd_scene load_steps=8 format=3 uid="uid://bgqrolpoalurh"]
 
 [ext_resource type="Texture2D" uid="uid://ttua6a6a7cb3" path="res://Media/images/Platform Title.png" id="1_2psyj"]
 [ext_resource type="Script" path="res://Scripts/menu.cs" id="1_w3dhr"]
 [ext_resource type="Texture2D" uid="uid://2utlt3cr0xim" path="res://Media/images/Platform TileMap2.png" id="2_rk5hx"]
 [ext_resource type="AudioStream" uid="uid://dl5dkwdcac4uw" path="res://Media/bgm/Platform Main Theme.wav" id="3_apch0"]
+[ext_resource type="PackedScene" uid="uid://spc41aod82nl" path="res://Scenes/Game Objects/wibble.tscn" id="5_qkrxc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_g0plj"]
 resource_name = "Basic Tiles"
@@ -147,6 +148,27 @@ text = "Quit"
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_apch0")
 autoplay = true
+
+[node name="wibble" parent="." instance=ExtResource("5_qkrxc")]
+position = Vector2(784, 209)
+
+[node name="wibble2" parent="." instance=ExtResource("5_qkrxc")]
+position = Vector2(857, 209)
+
+[node name="wibble3" parent="." instance=ExtResource("5_qkrxc")]
+position = Vector2(441, 222)
+
+[node name="wibble4" parent="." instance=ExtResource("5_qkrxc")]
+position = Vector2(846, 546)
+
+[node name="wibble5" parent="." instance=ExtResource("5_qkrxc")]
+position = Vector2(880, 546)
+
+[node name="wibble6" parent="." instance=ExtResource("5_qkrxc")]
+position = Vector2(947, 545)
+
+[node name="wibble7" parent="." instance=ExtResource("5_qkrxc")]
+position = Vector2(271, 512)
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Quit Button" to="." method="_on_quit_button_pressed"]

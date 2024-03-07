@@ -9,6 +9,12 @@ public partial class player : CharacterBody2D
 	private AnimatedSprite2D _animatedSprite;
 	private AudioStreamPlayer _runEffect;
 	private AudioStreamPlayer _jumpEffect;
+	private AudioStreamPlayer _deathEffect;
+
+	private int _tries = 0;
+	private int _lives = 3;
+	private int _idle = 1;
+	
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
@@ -29,7 +35,18 @@ public partial class player : CharacterBody2D
 		
 		if(area.IsInGroup("death"))
 		{
-			Position = new Vector2(95, 270);
+			_deathEffect.Play();
+			if(_tries < _lives)
+			{
+				Position = new Vector2(95, 270);
+				_tries += 1;
+			}
+			else 
+			{
+				_tries = 0;
+				GetTree().ChangeSceneToFile("res://Scenes/Scene Management/lose.tscn");
+			}
+			
 		}
 		
 		if(area.IsInGroup("win"))
@@ -44,6 +61,7 @@ public partial class player : CharacterBody2D
 		_animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		_runEffect = GetNode<AudioStreamPlayer>("Run Effect");
 		_jumpEffect = GetNode<AudioStreamPlayer>("Jump Effect");
+		_deathEffect = GetNode<AudioStreamPlayer>("Death Effect");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -54,42 +72,68 @@ public partial class player : CharacterBody2D
 		if (!IsOnFloor())
 			velocity.Y += gravity * (float)delta;
 		
-		// Get the input direction and handle the movement/deceleration.
-		// As good practice, you should replace UI actions with custom gameplay actions.
-		float inputX = Input.GetAxis("move_left", "move_right");
-		Vector2 direction = new Vector2(inputX, 0);
-		if (direction != Vector2.Zero)
+		// Jump
+		if(Input.IsActionJustPressed("jump"))
 		{
-			velocity.X = direction.X * Speed;
-			_animatedSprite.Play("Omar Run");
-			
-			if(_runEffect.Playing != true)
+			_idle = 0;
+			if(IsOnFloor())
 			{
-				_runEffect.Play();
+				velocity.Y = JumpVelocity;
+				if(!_jumpEffect.Playing)
+					_jumpEffect.Play();
+			}
+			
+			if(Input.IsActionPressed("move_right"))
+			{
+				velocity.X = 1 * Speed;
+				_animatedSprite.FlipH = false;
+			}
+			
+			if(Input.IsActionPressed("move_left"))
+			{
+				velocity.X = -1 * Speed;
+				_animatedSprite.FlipH = false;
 			}
 			
 		}
+		// Run
+		else if(Input.IsActionPressed("move_left"))
+		{
+			_idle = 0;
+			velocity.X = -1 * Speed;
+			_animatedSprite.FlipH = true;
+			_animatedSprite.Play("Omar Run");
+			if(!_runEffect.Playing)
+				_runEffect.Play();
+		}
+		else if(Input.IsActionPressed("move_right"))
+		{
+			_idle = 0;
+			velocity.X = 1 * Speed;
+			_animatedSprite.FlipH = false;
+			_animatedSprite.Play("Omar Run");
+			if(!_runEffect.Playing)
+				_runEffect.Play();
+		}
+		// Idle
 		else
 		{
+			_idle = 1;
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
 			_animatedSprite.Stop();
 			_runEffect.Stop();
 		}
 		
-		if (direction == Vector2.Zero)
+		// Idle Check
+		if (_idle == 1)
 		{
 			_animatedSprite.Play("Omar");
 		}
 		
-		// Handle Jump.
-		if (Input.IsActionJustPressed("jump") && IsOnFloor())
+		// Idle Check
+		if (velocity.Y != 0)
 		{
-			velocity.Y = JumpVelocity;
 			_animatedSprite.Play("Omar Jump");
-			if(_jumpEffect.Playing != true)
-			{
-				_jumpEffect.Play();
-			}
 		}
 		
 		Velocity = velocity;

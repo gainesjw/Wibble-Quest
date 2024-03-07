@@ -7,6 +7,7 @@ public partial class wibble : Area2D
 	private AnimatedSprite2D _animation;
 	private AudioStreamPlayer _victoryEffect;
 	private Timer _timer;
+	private int _trigger = 0;
 	
 	private void _on_despawn_timer_timeout()
 	{
@@ -23,10 +24,13 @@ public partial class wibble : Area2D
 	
 	private void _on_area_2d_area_entered(Area2D area)
 	{
-		// Replace with function body.
+		if(_trigger == 0)
+		{
 		_victoryEffect = GetNode<AudioStreamPlayer>("Victory Effect");
 		_victoryEffect.Play();
 		_timer = GetNode<Timer>("Despawn Timer");
 		_timer.Start();
+		}
+		_trigger += 1;
 	}
 }

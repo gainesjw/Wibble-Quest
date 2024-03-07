@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4om8ihxmbe2m"]
+[gd_scene load_steps=3 format=3 uid="uid://blg4ouhjl23sa"]
 
 [ext_resource type="PackedScene" uid="uid://bgqrolpoalurh" path="res://Scenes/Scene Management/menu.tscn" id="2_a1fu7"]
 [ext_resource type="PackedScene" uid="uid://spc41aod82nl" path="res://Scenes/Game Objects/wibble.tscn" id="2_w01ag"]

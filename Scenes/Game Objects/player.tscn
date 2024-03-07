@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://c6dxusm654pn5"]
+[gd_scene load_steps=19 format=3 uid="uid://c6dxusm654pn5"]
 
 [ext_resource type="Script" path="res://Scripts/player.cs" id="1_a8j1j"]
 [ext_resource type="Texture2D" uid="uid://ctq72kxoeornf" path="res://Media/images/Platform Omar Sprite.png" id="1_avm6f"]
 [ext_resource type="AudioStream" uid="uid://cleqf5ukgkcp5" path="res://Media/bgm/Platform Move Sound.wav" id="3_eaogb"]
 [ext_resource type="AudioStream" uid="uid://owxxystr4ffc" path="res://Media/bgm/Platform Jump Sound.wav" id="4_445lw"]
+[ext_resource type="AudioStream" uid="uid://c4vabjcejbbuf" path="res://Media/bgm/Platform Death Effect.wav" id="5_fkmia"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h5c00"]
 atlas = ExtResource("1_avm6f")
@@ -108,9 +109,8 @@ script = ExtResource("1_a8j1j")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_f1v1r")
-animation = &"Omar Run"
-frame = 5
-frame_progress = 0.63441
+animation = &"Omar Jump"
+speed_scale = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -2)
@@ -130,6 +130,10 @@ stream = ExtResource("3_eaogb")
 
 [node name="Jump Effect" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_445lw")
+volume_db = -5.0
+
+[node name="Death Effect" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_fkmia")
 volume_db = -5.0
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

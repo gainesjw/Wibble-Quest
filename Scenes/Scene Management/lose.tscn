@@ -1,17 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://bib6up35de88o"]
+[gd_scene load_steps=4 format=3 uid="uid://b1txqvvfskyh3"]
 
-[ext_resource type="Script" path="res://Scripts/endgame.cs" id="1_gfxej"]
-[ext_resource type="AudioStream" uid="uid://boujywhqaybhy" path="res://Media/bgm/Platform Win Song.wav" id="2_dwo70"]
-[ext_resource type="PackedScene" uid="uid://c8kge576v674n" path="res://Scenes/Scene Management/sceneTransition.tscn" id="3_uj438"]
+[ext_resource type="Script" path="res://lose.cs" id="1_wvni8"]
+[ext_resource type="AudioStream" uid="uid://vodqj8pcnnbp" path="res://Media/bgm/Platform Lose Music.wav" id="2_mbfxu"]
+[ext_resource type="PackedScene" uid="uid://c8kge576v674n" path="res://Scenes/Scene Management/sceneTransition.tscn" id="3_w574e"]
 
-[node name="endgame" type="Control"]
+[node name="lose" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_gfxej")
+script = ExtResource("1_wvni8")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
@@ -32,12 +32,13 @@ offset_right = 359.5
 offset_bottom = 180.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/normal_font_size = 71
+theme_override_font_sizes/normal_font_size = 65
 bbcode_enabled = true
-text = "[center]Congratulations! You saved all the Wibbles![center]"
+text = "[center]
+Try Again[center]"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_dwo70")
+stream = ExtResource("2_mbfxu")
 autoplay = true
 
 [node name="Timer" type="Timer" parent="."]
@@ -45,7 +46,7 @@ wait_time = 10.0
 one_shot = true
 autostart = true
 
-[node name="Fader" parent="." instance=ExtResource("3_uj438")]
+[node name="Fader" parent="." instance=ExtResource("3_w574e")]
 layout_mode = 1
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

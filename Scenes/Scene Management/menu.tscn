@@ -1,12 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://bgqrolpoalurh"]
+[gd_scene load_steps=7 format=3 uid="uid://bgqrolpoalurh"]
 
-[ext_resource type="Texture2D" uid="uid://ttua6a6a7cb3" path="res://Media/images/Platform Title.png" id="1_jlost"]
-[ext_resource type="AudioStream" uid="uid://dl5dkwdcac4uw" path="res://Media/bgm/Platform Main Theme.wav" id="2_n1s7u"]
-[ext_resource type="Texture2D" uid="uid://2utlt3cr0xim" path="res://Media/images/Platform TileMap2.png" id="2_x8ns1"]
+[ext_resource type="Texture2D" uid="uid://ttua6a6a7cb3" path="res://Media/images/Platform Title.png" id="1_2psyj"]
+[ext_resource type="Script" path="res://Scripts/menu.cs" id="1_w3dhr"]
+[ext_resource type="Texture2D" uid="uid://2utlt3cr0xim" path="res://Media/images/Platform TileMap2.png" id="2_rk5hx"]
+[ext_resource type="AudioStream" uid="uid://dl5dkwdcac4uw" path="res://Media/bgm/Platform Main Theme.wav" id="3_apch0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_g0plj"]
 resource_name = "Basic Tiles"
-texture = ExtResource("2_x8ns1")
+texture = ExtResource("2_rk5hx")
 margins = Vector2i(1, 1)
 separation = Vector2i(3, 3)
 texture_region_size = Vector2i(32, 32)
@@ -107,11 +108,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_w3dhr")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(574.5, 323.5)
 scale = Vector2(0.959167, 0.81125)
-texture = ExtResource("1_jlost")
+texture = ExtResource("1_2psyj")
 
 [node name="TileMap" type="TileMap" parent="Sprite2D"]
 position = Vector2(-598.957, -398.767)
@@ -143,5 +145,8 @@ layout_mode = 2
 text = "Quit"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_n1s7u")
+stream = ExtResource("3_apch0")
 autoplay = true
+
+[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quit Button" to="." method="_on_quit_button_pressed"]

@@ -1,0 +1,77 @@
+[gd_scene load_steps=11 format=3 uid="uid://bittuv7o3w5qu"]
+
+[ext_resource type="Texture2D" uid="uid://cpgpklspm17gx" path="res://Media/images/Platform Portal Sprite.png" id="1_l7ety"]
+[ext_resource type="Script" path="res://Scripts/portal.cs" id="1_mlt38"]
+[ext_resource type="AudioStream" uid="uid://ceqclsg4i0q1s" path="res://Media/bgm/Platform Portal Sound.wav" id="3_rdgpf"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1ca84"]
+radius = 8.0
+height = 20.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gc8u0"]
+atlas = ExtResource("1_l7ety")
+region = Rect2(2, 1, 32, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8r1v5"]
+atlas = ExtResource("1_l7ety")
+region = Rect2(37, 1, 32, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_go06h"]
+atlas = ExtResource("1_l7ety")
+region = Rect2(72, 1, 32, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jsur6"]
+atlas = ExtResource("1_l7ety")
+region = Rect2(107, 1, 32, 34)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tg25d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gc8u0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8r1v5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_go06h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jsur6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_go06h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8r1v5")
+}],
+"loop": true,
+"name": &"portal_active",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_djqa4"]
+
+[node name="portal" type="Area2D"]
+script = ExtResource("1_mlt38")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_1ca84")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_tg25d")
+animation = &"portal_active"
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+collision_priority = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CapsuleShape2D_djqa4")
+
+[node name="Teleport Effect" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_rdgpf")
+
+[connection signal="tree_entered" from="." to="." method="_on_tree_entered"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

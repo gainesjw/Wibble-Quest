@@ -1,0 +1,135 @@
+[gd_scene load_steps=18 format=3 uid="uid://c6dxusm654pn5"]
+
+[ext_resource type="Script" path="res://Scripts/player.cs" id="1_a8j1j"]
+[ext_resource type="Texture2D" uid="uid://ctq72kxoeornf" path="res://Media/images/Platform Omar Sprite.png" id="1_avm6f"]
+[ext_resource type="AudioStream" uid="uid://cleqf5ukgkcp5" path="res://Media/bgm/Platform Move Sound.wav" id="3_eaogb"]
+[ext_resource type="AudioStream" uid="uid://owxxystr4ffc" path="res://Media/bgm/Platform Jump Sound.wav" id="4_445lw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h5c00"]
+atlas = ExtResource("1_avm6f")
+region = Rect2(4, 4, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mbd5r"]
+atlas = ExtResource("1_avm6f")
+region = Rect2(4, 72, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7j8fi"]
+atlas = ExtResource("1_avm6f")
+region = Rect2(4, 38, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_681b5"]
+atlas = ExtResource("1_avm6f")
+region = Rect2(39, 38, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_baev7"]
+atlas = ExtResource("1_avm6f")
+region = Rect2(74, 38, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iq5b0"]
+atlas = ExtResource("1_avm6f")
+region = Rect2(109, 38, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nelap"]
+atlas = ExtResource("1_avm6f")
+region = Rect2(144, 38, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mvcbd"]
+atlas = ExtResource("1_avm6f")
+region = Rect2(179, 38, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fvrp1"]
+atlas = ExtResource("1_avm6f")
+region = Rect2(214, 38, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d6v5h"]
+atlas = ExtResource("1_avm6f")
+region = Rect2(249, 38, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f1v1r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h5c00")
+}],
+"loop": true,
+"name": &"Omar",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mbd5r")
+}],
+"loop": true,
+"name": &"Omar Jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_7j8fi")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_681b5")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_baev7")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_iq5b0")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_nelap")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_mvcbd")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_fvrp1")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_d6v5h")
+}],
+"loop": true,
+"name": &"Omar Run",
+"speed": 12.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a75qm"]
+radius = 10.4357
+height = 29.6341
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4kyf7"]
+radius = 9.0
+height = 28.0
+
+[node name="player" type="CharacterBody2D"]
+floor_constant_speed = true
+floor_max_angle = 0.794125
+script = ExtResource("1_a8j1j")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_f1v1r")
+animation = &"Omar Run"
+frame = 5
+frame_progress = 0.63441
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -2)
+rotation = 0.261799
+shape = SubResource("CapsuleShape2D_a75qm")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -1)
+shape = SubResource("CapsuleShape2D_4kyf7")
+
+[node name="Run Effect" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_eaogb")
+
+[node name="Jump Effect" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_445lw")
+volume_db = -5.0
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

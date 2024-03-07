@@ -1,14 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://lbp5ga1vcwhu"]
+[gd_scene load_steps=4 format=3 uid="uid://lbp5ga1vcwhu"]
 
-[ext_resource type="AudioStream" uid="uid://cwhd248jhbblp" path="res://Media/bgm/Platform Suspense Music.wav" id="1_lkufc"]
+[ext_resource type="Script" path="res://Scripts/introduction.cs" id="1_2uxss"]
+[ext_resource type="AudioStream" uid="uid://cwhd248jhbblp" path="res://Media/bgm/Platform Suspense Music.wav" id="1_7auic"]
+[ext_resource type="PackedScene" uid="uid://c8kge576v674n" path="res://Scenes/Scene Management/sceneTransition.tscn" id="3_jdgft"]
 
-[node name="Control" type="Control"]
+[node name="Introduction" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_2uxss")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
@@ -38,5 +41,18 @@ The Wibbles have been chased away by the evil magician Do-Hicky and teleported i
 It's up to you, Omar, to bring them back home. [center]"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("1_lkufc")
+stream = ExtResource("1_7auic")
 autoplay = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[node name="Fader" parent="." instance=ExtResource("3_jdgft")]
+layout_mode = 1
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="tree_entered" from="Fader" to="." method="_on_fader_tree_entered"]
+
+[editable path="Fader"]

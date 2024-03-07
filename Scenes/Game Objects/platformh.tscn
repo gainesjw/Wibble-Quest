@@ -1,0 +1,175 @@
+[gd_scene load_steps=10 format=3 uid="uid://c6su2huvkj3p3"]
+
+[ext_resource type="Script" path="res://Scripts/platformh.cs" id="1_u2uc8"]
+[ext_resource type="Texture2D" uid="uid://2utlt3cr0xim" path="res://Media/images/Platform TileMap2.png" id="2_y2qyo"]
+
+[sub_resource type="Curve2D" id="Curve2D_yssdt"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 276, 0, 0, 0, 0, 0, 554, 0)
+}
+point_count = 3
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_grad0"]
+texture = ExtResource("2_y2qyo")
+margins = Vector2i(1, 1)
+separation = Vector2i(3, 3)
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+10:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+8:4/0 = 0
+9:4/0 = 0
+10:4/0 = 0
+11:4/0 = 0
+12:4/0 = 0
+13:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+8:5/0 = 0
+9:5/0 = 0
+10:5/0 = 0
+11:5/0 = 0
+12:5/0 = 0
+13:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+7:6/0 = 0
+8:6/0 = 0
+9:6/0 = 0
+10:6/0 = 0
+11:6/0 = 0
+12:6/0 = 0
+13:6/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_0a07n"]
+sources/0 = SubResource("TileSetAtlasSource_grad0")
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bboe4"]
+radius = 32.0
+height = 162.0
+
+[sub_resource type="Animation" id="Animation_tkth2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D:progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_0rncb"]
+resource_name = "platform_horizontal"
+length = 2.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D:progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 522.58]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n2c03"]
+_data = {
+"RESET": SubResource("Animation_tkth2"),
+"platform_horizontal": SubResource("Animation_0rncb")
+}
+
+[node name="Path2D" type="Path2D"]
+curve = SubResource("Curve2D_yssdt")
+script = ExtResource("1_u2uc8")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2(523.596, 0)
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="PathFollow2D"]
+remote_path = NodePath("../../AnimatableBody2D")
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+position = Vector2(523.596, 0)
+
+[node name="TileMap" type="TileMap" parent="AnimatableBody2D"]
+tile_set = SubResource("TileSet_0a07n")
+format = 2
+layer_0/tile_data = PackedInt32Array(-1, 327680, 2, 131071, 262144, 2, -3, 327680, 2, -65535, 327680, 2, 131069, 262144, 2, 65537, 262144, 2, -5, 196608, 2, 131067, 0, 2, 65539, 65536, 2, -65533, 131072, 2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
+position = Vector2(-8, 8)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_bboe4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_n2c03")
+}
